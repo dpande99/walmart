@@ -1,0 +1,15 @@
+2025-06-17 08:05:49,599 - main_sequential - INFO - --- CAPTURING ALL OUTPUT for req_id f31afdb1 to: full_request_logs/req_full_output_20250617_080549_597848_f31afdb1.log ---
+2025-06-17 08:05:49,604 - api.routes.agent_sequential - INFO - Console: Received query in agent.py endpoint: what are the total sales by state?
+2025-06-17 08:05:49,604 - core.agent_manager_sequential - INFO - AgentManager.process_query received query: 'what are the total sales by state?'
+2025-06-17 08:05:49,604 - core.agent_manager_sequential - INFO - --- XIYAN-SQL ORCHESTRATED WORKFLOW START ---
+2025-06-17 08:05:49,605 - core.agent_manager_sequential - ERROR - Error in orchestration workflow: type object 'AgentFactorySequential' has no attribute 'create_agents'
+Traceback (most recent call last):
+  File "/Users/dristipande/Desktop/walmart/core/agent_manager_sequential.py", line 37, in _orchestrate_workflow
+    agents = AgentFactorySequential.create_agents(
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AttributeError: type object 'AgentFactorySequential' has no attribute 'create_agents'
+2025-06-17 08:05:49,607 - core.agent_manager_sequential - INFO - AgentManager.process_query finished for query: 'what are the total sales by state?'
+2025-06-17 08:05:49,607 - api.routes.agent_sequential - INFO - API Endpoint: agent_manager.process_query returned.
+2025-06-17 08:05:49,608 - main_sequential - INFO - --- FINISHED CAPTURING OUTPUT for req_id f31afdb1. File: full_request_logs/req_full_output_20250617_080549_597848_f31afdb1.log ---
+--- STDOUT/STDERR REDIRECTION ACTIVE (ReqID: f31afdb1, Time: 2025-06-17 08:05:49.600230) ---
+--- STDOUT/STDERR REDIRECTION ENDED (ReqID: f31afdb1, Time: 2025-06-17 08:05:49.608496) ---

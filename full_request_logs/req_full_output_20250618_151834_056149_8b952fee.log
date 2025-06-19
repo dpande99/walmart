@@ -1,0 +1,109 @@
+2025-06-18 15:18:34,057 - main_sequential - INFO - --- CAPTURING ALL OUTPUT for req_id 8b952fee to: full_request_logs/req_full_output_20250618_151834_056149_8b952fee.log ---
+2025-06-18 15:18:34,066 - api.routes.agent_sequential - INFO - Console: Received query in agent.py endpoint: For each year, which category had the lowest average sales?
+2025-06-18 15:18:34,066 - core.agent_manager_sequential - INFO - AgentManager.process_query received query: 'For each year, which category had the lowest average sales?'
+2025-06-18 15:18:34,066 - core.agent_manager_sequential - INFO - --- XIYAN-SQL ORCHESTRATED WORKFLOW START ---
+2025-06-18 15:18:34,154 - core.agents_sequential - INFO - METADATA_AVAILABLE is True. Registering data dictionary tools.
+2025-06-18 15:18:34,190 - core.agent_manager_sequential - INFO - [Orchestrator] STAGE 1: Schema Linking
+--- STDOUT/STDERR REDIRECTION ACTIVE (ReqID: 8b952fee, Time: 2025-06-18 15:18:34.058219) ---
+created new sequential agents
+[33mUserProxy[0m (to SchemaAnalyst):
+
+User Question: 'For each year, which category had the lowest average sales?'
+
+--------------------------------------------------------------------------------
+[31m
+>>>>>>>> USING AUTO REPLY...[0m
+2025-06-18 15:18:34,939 - httpx - INFO - HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 200 OK"
+[33mSchemaAnalyst[0m (to UserProxy):
+
+[32m***** Suggested tool call (call_12JabHbQwTeVCajSwQIvKu5C): get_data_dictionary_tables *****[0m
+Arguments: 
+{}
+[32m*******************************************************************************************[0m
+
+--------------------------------------------------------------------------------
+[35m
+>>>>>>>> EXECUTING FUNCTION get_data_dictionary_tables...
+Call ID: call_12JabHbQwTeVCajSwQIvKu5C
+Input arguments: {}[0m
+2025-06-18 15:18:34,961 - tools.db_tools - WARNING - METADATA SCHEMA (DB_SCHEMAS[1]) is not properly configured. DD tables might not be found.
+2025-06-18 15:18:34,961 - tools.db_tools - WARNING - No specific metadata schema configured, attempting to use 'dd_tables' directly.
+2025-06-18 15:18:34,963 - tools.db_tools - INFO - Tool: get_data_dictionary_tables - Querying Identifier('dd_tables').
+2025-06-18 15:18:34,979 - tools.db_tools - ERROR - Tool: Error in get_data_dictionary_tables querying Identifier('dd_tables'): relation "dd_tables" does not exist
+LINE 1: ...ECT "Table", "Priority", "Table Description" FROM "dd_tables...
+                                                             ^
+Traceback (most recent call last):
+  File "/Users/dristipande/Desktop/walmart/tools/db_tools.py", line 277, in get_data_dictionary_tables
+    cursor.execute(query)
+    ~~~~~~~~~~~~~~^^^^^^^
+  File "/Users/dristipande/Desktop/walmart/venv/lib/python3.13/site-packages/psycopg2/extras.py", line 236, in execute
+    return super().execute(query, vars)
+           ~~~~~~~~~~~~~~~^^^^^^^^^^^^^
+psycopg2.errors.UndefinedTable: relation "dd_tables" does not exist
+LINE 1: ...ECT "Table", "Priority", "Table Description" FROM "dd_tables...
+                                                             ^
+
+[33mUserProxy[0m (to SchemaAnalyst):
+
+[32m***** Response from calling tool (call_12JabHbQwTeVCajSwQIvKu5C) *****[0m
+[{'error': 'Failed to retrieve from Identifier(\'dd_tables\'): relation "dd_tables" does not exist\nLINE 1: ...ECT "Table", "Priority", "Table Description" FROM "dd_tables...\n                                                             ^\n'}]
+[32m**********************************************************************[0m
+
+--------------------------------------------------------------------------------
+[31m
+>>>>>>>> USING AUTO REPLY...[0m
+2025-06-18 15:18:35,699 - httpx - INFO - HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 200 OK"
+[33mSchemaAnalyst[0m (to UserProxy):
+
+[32m***** Suggested tool call (call_PG826Ed4Va2QWq5HIZaSZiTP): get_all_db_objects *****[0m
+Arguments: 
+{}
+[32m***********************************************************************************[0m
+
+--------------------------------------------------------------------------------
+[35m
+>>>>>>>> EXECUTING FUNCTION get_all_db_objects...
+Call ID: call_PG826Ed4Va2QWq5HIZaSZiTP
+Input arguments: {}[0m
+[33mUserProxy[0m (to SchemaAnalyst):
+
+[32m***** Response from calling tool (call_PG826Ed4Va2QWq5HIZaSZiTP) *****[0m
+{'tables': [{'schema': 'walmart_schema', 'name': 'calendar', 'full_name': 'walmart_schema.calendar'}, {'schema': 'walmart_schema', 'name': 'sales', 'full_name': 'walmart_schema.sales'}, {'schema': 'walmart_schema', 'name': 'sell_prices', 'full_name': 'walmart_schema.sell_prices'}], 'views': [], 'materialized_views': []}
+[32m**********************************************************************[0m
+
+--------------------------------------------------------------------------------
+[31m
+>>>>>>>> USING AUTO REPLY...[0m
+2025-06-18 15:18:38,671 - httpx - INFO - HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 200 OK"
+[33mSchemaAnalyst[0m (to UserProxy):
+
+[32m***** Suggested tool call (call_yaQ0Q7AQ6NTBZPUZKCc4D0Dv): get_all_db_objects *****[0m
+Arguments: 
+{}
+[32m***********************************************************************************[0m
+
+--------------------------------------------------------------------------------
+[31m
+>>>>>>>> TERMINATING RUN (47f1f2cd-ab1d-4caf-97c2-72f2de52d23b): Maximum turns (3) reached[0m
+2025-06-18 15:18:38,675 - core.agent_manager_sequential - ERROR - Failed to parse JSON list with key 'tables': 'NoneType' object has no attribute 'find'. Content was: 'None'
+2025-06-18 15:18:38,675 - core.agent_manager_sequential - ERROR - Error in orchestration workflow: Orchestrator could not parse a required response for key: tables
+Traceback (most recent call last):
+  File "/Users/dristipande/Desktop/walmart/core/agent_manager_sequential.py", line 218, in _parse_json_list
+    json_str = self._extract_json_from_string(last_message)
+  File "/Users/dristipande/Desktop/walmart/core/agent_manager_sequential.py", line 197, in _extract_json_from_string
+    start_brace = text.find('{')
+                  ^^^^^^^^^
+AttributeError: 'NoneType' object has no attribute 'find'
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "/Users/dristipande/Desktop/walmart/core/agent_manager_sequential.py", line 49, in _orchestrate_workflow
+    selected_tables = self._parse_json_list(chat_res_1, 'tables')
+  File "/Users/dristipande/Desktop/walmart/core/agent_manager_sequential.py", line 223, in _parse_json_list
+    raise ValueError(f"Orchestrator could not parse a required response for key: {key}")
+ValueError: Orchestrator could not parse a required response for key: tables
+2025-06-18 15:18:38,683 - core.agent_manager_sequential - INFO - AgentManager.process_query finished for query: 'For each year, which category had the lowest average sales?'
+2025-06-18 15:18:38,683 - api.routes.agent_sequential - INFO - API Endpoint: agent_manager.process_query returned.
+2025-06-18 15:18:38,685 - main_sequential - INFO - --- FINISHED CAPTURING OUTPUT for req_id 8b952fee. File: full_request_logs/req_full_output_20250618_151834_056149_8b952fee.log ---
+--- STDOUT/STDERR REDIRECTION ENDED (ReqID: 8b952fee, Time: 2025-06-18 15:18:38.685032) ---

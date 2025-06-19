@@ -1,0 +1,9 @@
+fastapi
+uvicorn
+pydantic
+pydantic-settings
+psycopg2-binary
+python-dotenv
+pyautogen
+openai
+python-multipart
