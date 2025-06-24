@@ -1,2 +1,7 @@
 walmart_data/
 .env
+*.pyc
+__pycache__/
+full_request_logs/
+.DS_Store
+venv/
